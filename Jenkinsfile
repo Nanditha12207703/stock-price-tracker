@@ -20,7 +20,7 @@ pipeline {
             steps {
                 script {
                     // Run the Docker container in detached mode
-                    sh 'docker run -d -p 5000:5000 stock-prediction-app'
+                    sh 'docker run -d -p 8501:8501 stock-prediction-app'
                 }
             }
         }
