@@ -39,22 +39,14 @@ pipeline {
     agent any
 
     environment {
-        PYTHON_HOME = "C:\\Python311"
+        PYTHON_PATH = 'C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
     }
 
     stages {
-        stage('Declarative: Checkout SCM') {
+        stage('Checkout') {
             steps {
-                checkout scm
-            }
-        }
-
-        stage('Clone') {
-            steps {
-                echo 'Cloning Repository...'
-                dir('C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\stock-price-tracker') {
-                    bat 'dir'
-                }
+                echo 'Cloning the Git repository...'
+                git 'https://github.com/Nanditha12207703/stock-price-tracker.git'
             }
         }
 
@@ -62,28 +54,24 @@ pipeline {
             steps {
                 echo 'Installing project dependencies...'
                 script {
-                    // Check if Python is available
-                    if (!fileExists("${PYTHON_HOME}\\python.exe")) {
-                        error "Python not found at ${PYTHON_HOME}. Please check your Python installation."
-                    }
-
-                    // Install dependencies
-                    bat "${PYTHON_HOME}\\python.exe -m pip install -r requirements.txt"
+                    bat "\"${env.PYTHON_PATH}\" -m pip install -r requirements.txt"
                 }
             }
         }
 
         stage('Deploy') {
             steps {
+                echo 'Deploying the application...'
                 echo 'Starting Python app...'
                 bat 'start /B C:\\Python311\\python.exe app.py'
+                // Add any deployment steps here, e.g., running the app or Docker container
             }
         }
     }
 
     post {
         success {
-            echo 'Pipeline completed successfully.'
+            echo 'Pipeline completed successfully!'
         }
         failure {
             echo 'Pipeline failed.'
