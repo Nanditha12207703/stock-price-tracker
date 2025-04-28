@@ -15,7 +15,9 @@ pipeline {
                 echo 'Installing project dependencies...'
                 script {
                     if (fileExists('requirements.txt')) {
-                        bat 'pip install -r requirements.txt'
+                        bat 'python --version'
+                        bat 'python -m pip install --upgrade pip'
+                        bat 'python -m pip install -r requirements.txt'
                     } else {
                         echo "No requirements.txt found, skipping dependency installation."
                     }
@@ -26,7 +28,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Starting the Python application...'
-                bat 'start /B python app.py'
+                bat 'python app.py'
             }
         }
     }
