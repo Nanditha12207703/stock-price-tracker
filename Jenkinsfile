@@ -1,38 +1,39 @@
 pipeline {
     agent any
-    
+
     environment {
-        DOCKER_IMAGE_NAME = 'stock-prediction-app'
-        REPO_URL = 'https://github.com/Nanditha12207703/stock-price-tracker.git'
-        BRANCH = 'main'
+        DOCKER_IMAGE = 'stock-prediction-app'
     }
 
     stages {
-        stage('Checkout') {
+        stage('Checkout SCM') {
             steps {
-                // Checkout the code from the Git repository
-                git url: "${REPO_URL}", branch: "${BRANCH}"
+                // Checkout the repository
+                checkout scm
             }
         }
-
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build the Docker image
-                    echo 'Building Docker Image...'
-                    sh 'docker build -t ${DOCKER_IMAGE_NAME} .'
+                    // Build Docker image
+                    sh 'docker build -t $DOCKER_IMAGE .'
                 }
             }
         }
-
         stage('Deploy') {
             steps {
                 script {
-                    // Add your deployment steps here
-                    echo 'Deploying the application...'
-                    // For example, you can run the Docker container
-                    // sh 'docker run -d -p 8080:8080 ${DOCKER_IMAGE_NAME}'
+                    // Deploy your Docker container
+                    // (If you need to deploy, use docker run or docker-compose)
+                    sh 'docker run -d -p 5000:5000 $DOCKER_IMAGE'
                 }
             }
         }
     }
+    post {
+        always {
+            // Clean up, stop container or any final tasks
+            cleanWs()
+        }
+    }
+}
