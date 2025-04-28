@@ -2,26 +2,19 @@ pipeline {
     agent any
 
     stages {
-        stage('Checkout SCM') {
+        stage('Clone Repository') {
             steps {
-                // Checkout the repository
-                checkout scm
+                git 'https://github.com/Nanditha12207703/real_time_price_tracker.git'
             }
         }
         stage('Build Docker Image') {
             steps {
-                script {
-                    // Build the Docker image using the Dockerfile
-                    sh 'docker build -t stock-prediction-app .'
-                }
+                sh 'docker build -t stock-tracker-app .'
             }
         }
-        stage('Run Docker Image') {
+        stage('Run Docker Container') {
             steps {
-                script {
-                    // Run the Docker container in detached mode
-                    sh 'docker run -d -p 8501:8501 stock-prediction-app'
-                }
+                sh 'docker run -d -p 8501:8501 stock-tracker-app'
             }
         }
     }
