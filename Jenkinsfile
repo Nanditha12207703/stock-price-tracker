@@ -61,9 +61,10 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
-                // Add your deployment steps (like docker build/run) here
-                echo 'Starting Python app...'
-                bat 'start /B C:\\Python311\\python.exe app.py'
+                script {
+                    bat 'docker build -t stock-price-tracker .'
+                    bat 'docker run -d -p 8501:8501 --name stock-price-tracker-container stock-price-tracker'
+                }
             }
         }
     }
