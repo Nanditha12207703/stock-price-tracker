@@ -1,20 +1,24 @@
 pipeline {
     agent any
-
+    
     stages {
-        stage('Clone Repository') {
+        stage('Clone') {
             steps {
-                git 'https://github.com/Nanditha12207703/real_time_price_tracker.git'
+                git 'https://github.com/Nanditha12207703/stock-price-tracker.git'
             }
         }
-        stage('Build Docker Image') {
+        
+        stage('Build') {
             steps {
-                sh 'docker build -t stock-tracker-app .'
+                // Any build steps, such as installing dependencies, can go here.
+                echo 'Build steps go here.'
             }
         }
-        stage('Run Docker Container') {
+        
+        stage('Deploy') {
             steps {
-                sh 'docker run -d -p 8501:8501 stock-tracker-app'
+                // Add the deployment steps here, such as pushing to a server, cloud, or container
+                echo 'Deploy steps go here.'
             }
         }
     }
