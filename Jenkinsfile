@@ -15,23 +15,23 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Installing project dependencies...'
-                // Install requirements if requirements.txt exists
                 script {
                     if (fileExists('requirements.txt')) {
-                        bat 'pip install -r requirements.txt'
+                        bat 'C:\\Python311\\python.exe -m pip install -r requirements.txt'
                     } else {
-                        echo "No requirements.txt found, skipping dependency installation."
+                            echo "No requirements.txt found, skipping dependency installation."
                     }
                 }
             }
         }
 
+
         stage('Deploy') {
             steps {
                 echo 'Starting the Python application...'
-                // Run the stock_price_tracker.py script
-                bat 'start /B python stock_price_tracker.py'
+                bat 'start /B C:\\Python311\\python.exe app.py'
             }
         }
+
     }
 }
