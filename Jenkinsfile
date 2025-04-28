@@ -34,7 +34,6 @@
     }
 }
 */
-
 pipeline {
     agent any
 
@@ -46,7 +45,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 echo 'Cloning the Git repository...'
-                git 'https://github.com/Nanditha12207703/stock-price-tracker.git'
+                git branch: 'main', url: 'https://github.com/Nanditha12207703/stock-price-tracker.git'
             }
         }
 
@@ -62,9 +61,9 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo 'Deploying the application...'
+                // Add your deployment steps (like docker build/run) here
                 echo 'Starting Python app...'
                 bat 'start /B C:\\Python311\\python.exe app.py'
-                // Add any deployment steps here, e.g., running the app or Docker container
             }
         }
     }
