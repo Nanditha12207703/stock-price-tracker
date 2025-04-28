@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        DOCKER_IMAGE = 'stock-prediction-app'
-    }
-
     stages {
         stage('Checkout SCM') {
             steps {
@@ -15,25 +11,18 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    // Build Docker image
-                    sh 'docker build -t $DOCKER_IMAGE .'
+                    // Build the Docker image using the Dockerfile
+                    sh 'docker build -t stock-prediction-app .'
                 }
             }
         }
-        stage('Deploy') {
+        stage('Run Docker Image') {
             steps {
                 script {
-                    // Deploy your Docker container
-                    // (If you need to deploy, use docker run or docker-compose)
-                    sh 'docker run -d -p 5000:5000 $DOCKER_IMAGE'
+                    // Run the Docker container in detached mode
+                    sh 'docker run -d -p 5000:5000 stock-prediction-app'
                 }
             }
-        }
-    }
-    post {
-        always {
-            // Clean up, stop container or any final tasks
-            cleanWs()
         }
     }
 }
