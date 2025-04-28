@@ -1,29 +1,37 @@
 pipeline {
     agent any
-    
+
     stages {
         stage('Clone') {
             steps {
-                echo 'Code already cloned by Jenkins from SCM'
-                // No need to manually checkout here
+                echo 'Cloning Repository...'
+                // In Pipeline from SCM, Jenkins clones automatically. So no git clone needed here.
+                // We can just print working directory.
+                sh 'pwd'
+                sh 'ls -la'
             }
         }
-        
+
         stage('Build') {
             steps {
-                echo 'Building the stock price tracker project...'
-                // Add build commands if needed, like:
-                // sh 'pip install -r requirements.txt'
-                // sh 'python setup.py build'
+                echo 'Installing project dependencies...'
+                // Install requirements if requirements.txt exists
+                script {
+                    if (fileExists('requirements.txt')) {
+                        sh 'pip install -r requirements.txt'
+                    } else {
+                        echo "No requirements.txt found, skipping dependency installation."
+                    }
+                }
             }
         }
-        
+
         stage('Deploy') {
             steps {
-                echo 'Deploying the stock price tracker project...'
-                // Add deploy steps here, e.g.:
-                // sh 'docker build -t stock-price-tracker .'
-                // sh 'docker run -d -p 5000:5000 stock-price-tracker'
+                echo 'Starting the Python application...'
+                // Run the stock_price_tracker.py script
+                sh 'python stock_price_tracker.py &'
             }
         }
     }
+}
