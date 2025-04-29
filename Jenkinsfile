@@ -11,14 +11,15 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building the Docker image...'
-                sh 'docker build -t stock-price-tracker .'
+                bat 'docker build -t stock-price-tracker .'
             }
         }
         stage('Deploy') {
             steps {
                 echo 'Running the Docker container...'
-                sh '''
-                    docker rm -f stock-price-tracker-container || true
+                bat '''
+                    docker stop stock-price-tracker-container || exit 0
+                    docker rm stock-price-tracker-container || exit 0
                     docker run -d -p 8501:8501 --name stock-price-tracker-container stock-price-tracker
                 '''
             }
