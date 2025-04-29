@@ -63,7 +63,11 @@ pipeline {
                 echo 'Deploying the application...'
                 script {
                     bat 'docker build -t stock-price-tracker .'
-                    bat 'docker run -d -p 8502:8501 --name stock-price-tracker-container stock-price-tracker'
+                    bat '''    
+                    docker stop stock-price-tracker-container || exit 0
+                    docker rm stock-price-tracker-container || exit 0
+                    docker run -d -p 8501:8501 --name stock-price-tracker-container stock-price-tracker
+                    '''
                 }
             }
         }
