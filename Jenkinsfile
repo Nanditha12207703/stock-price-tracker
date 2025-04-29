@@ -37,9 +37,9 @@
 pipeline {
     agent any
 
-    environment {
-        PYTHON_PATH = 'C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
-    }
+   // environment {
+     //   PYTHON_PATH = 'C:\\Users\\Lenovo\\AppData\\Local\\Programs\\Python\\Python313\\python.exe'
+    //}
 
     stages {
         stage('Checkout') {
