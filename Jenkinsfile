@@ -48,22 +48,22 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/Nanditha12207703/stock-price-tracker.git'
             }
         }
-stage('Build') {
-    steps {
-        echo 'Building the Docker image...'
-        bat 'docker build -t stock-price-tracker .'
-    }
-}        
-    stage('Deploy') {
-    steps {
-        echo 'Deploying the Docker container...'
-        script {
-            bat 'docker rm -f stock-price-tracker-container || exit 0'
-            bat 'docker run -d -p 8501:8501 --name stock-price-tracker-container stock-price-tracker'
+        stage('Build') {
+            steps {
+                echo 'Building the Docker image...'
+                bat 'docker build -t stock-price-tracker .'
+            }
+        }        
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the Docker container...'
+                script {
+                    bat 'docker rm -f stock-price-tracker-container || exit 0'
+                    bat 'docker run -d -p 8501:8501 --name stock-price-tracker-container stock-price-tracker'
+                }
+            }
         }
     }
-}
-
 
     post {
         success {
