@@ -9,7 +9,6 @@ COPY . /app
 
 # Step 4: Install the required Python dependencies
 RUN pip install --upgrade pip
-RUN pip install setuptools
 RUN pip install -r requirements.txt
 
 # Step 5: Expose port 8501 for Streamlit to run
