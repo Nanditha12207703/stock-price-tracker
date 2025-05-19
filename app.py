@@ -8,7 +8,7 @@ import numpy as np
 # webhook testing
 # App Title
 st.set_page_config(page_title="Live Stock Tracker & Prediction", page_icon="📈")
-st.title('📈 UnReal-Time Stock Tracker + 🔮 Price Prediction')
+st.title('📈 Real-Time Stock Tracker + 🔮 Price Prediction')
 
 # User input
 ticker = st.text_input('Enter Stock Ticker (example: AAPL, TSLA, MSFT)', 'AAPL')
