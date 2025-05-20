@@ -121,3 +121,5 @@ while True:
             prediction_placeholder.plotly_chart(fig_pred, use_container_width=True)
 
     time.sleep(refresh_rate)
+
+#triggering pipeline
